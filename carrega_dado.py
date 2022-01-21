@@ -33,8 +33,8 @@ direitos = {
 
 
 
-def xxx (backoffica_data, contratos_data, direitos_data):
-    
+def yyy (backoffica_data, contratos_data, direitos_data):
+    pass
     
 
 
