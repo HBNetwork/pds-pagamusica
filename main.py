@@ -74,7 +74,7 @@ def parser_backoffice_data(backoffice_data: tuple):
     from collections import defaultdict
     resp = defaultdict(int)  # = zero, 0
     for musica in backoffice_data[1:]:
-        resp[musica[0:3]] += musica[3]
+        resp[musica[:3]] += musica[3]
     return resp
 
 
