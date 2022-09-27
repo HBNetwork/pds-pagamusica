@@ -39,7 +39,7 @@ def calcula_total_por_musica(data):
     total = defaultdict(int)
 
     for pagamento in data[1:]:
-        total[(pagamento[0:3])] += pagamento[3]
+        total[pagamento[:3]] += pagamento[3]
 
     #pprint(total)
     return total
@@ -60,23 +60,13 @@ def calcula_direitos_por_representante_musica_artista(total_por_musica, direitos
     #pprint(dict_direitos)
 
     for musica, total in total_por_musica.items():
-        #pprint(musica)
+        if direitos := dict_direitos[musica[0]]:
+            for direito in dict_direitos[musica[0]]:
+                resp_ok[direito[0], direito[3]] += total * direito[4] / 100
 
-        direitos = dict_direitos[musica[0]]
-
-        if not direitos:
-            musicas_faltam_cadastro.append((musica, total))
 
         else:
-
-            for direito in dict_direitos[musica[0]]:
-                #pprint(f"direito: {direito}")
-                editora = direito[0]
-                autor = direito[3]
-                autor_percentual = direito[4]
-
-                resp_ok[(editora, autor)] += total * autor_percentual / 100
-
+            musicas_faltam_cadastro.append((musica, total))
 
     #pprint(resp)
 
@@ -88,10 +78,10 @@ def calcula_direitos_por_representante_musica_artista(total_por_musica, direitos
 def gera_relatorio(direitos_bruto, contratos):
 
     resp = []
-    contratos_dict = dict()
+    contratos_dict = {
+        contrato[0]: (contrato[1], contrato[2]) for contrato in contratos[1:]
+    }
 
-    for contrato in contratos[1:]:
-        contratos_dict[contrato[0]] = (contrato[1], contrato[2])
 
     for (representante, autor), valor_tt in direitos_bruto.items():
         pct_contrato, pct_editora = contratos_dict[representante]

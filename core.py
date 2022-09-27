@@ -1,7 +1,7 @@
 
 
 def calculos_comissoes(admin_perc, editora_perc, autores_perc, total):
-    
+
     comissao_admin = total * admin_perc
     valor_total_editora = total - comissao_admin
     comissao_editora = valor_total_editora * editora_perc
@@ -15,6 +15,6 @@ def calculos_comissoes(admin_perc, editora_perc, autores_perc, total):
         total_autores += comissao_autor
 
     comissao_editora = total - comissao_admin - total_autores 
-        
+
     return comissao_admin, comissao_editora, tuple(comissao_autores)
     
